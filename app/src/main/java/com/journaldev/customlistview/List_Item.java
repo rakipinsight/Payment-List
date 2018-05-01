@@ -58,6 +58,8 @@ public class List_Item extends AppCompatActivity{
     private ListView mMessageListView;
 //    private MessageAdapter mMessageAdapter;
 
+    private TextView title_TextView;
+
     public Double calculateAgentAmount(Double principal, Double percent){
 
         BigDecimal base = new BigDecimal(principal);
@@ -104,13 +106,38 @@ public class List_Item extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item);
 
-//        mTextMessage = (TextView) findViewById(R.id.message);
+        Intent intent = getIntent();
 
-//        mMessageListView = (ListView) findViewById(R.id.messageListView);
-//        // Initialize message ListView and its adapter
-//        List<FriendlyMessage> friendlyMessages = new ArrayList<>();
-//        mMessageAdapter = new MessageAdapter(this, R.layout.item_message, friendlyMessages);
-//        mMessageListView.setAdapter(mMessageAdapter);
+        // Payment Title
+
+        Log.i("$$$$$$$$$$$&&& Title : ",intent.getStringExtra("paymentTitle"));
+
+        title_TextView = (TextView) findViewById(R.id.title_TextView);
+        title_TextView.setText(intent.getStringExtra("paymentTitle"), TextView.BufferType.EDITABLE);
+
+        // Collection Amount
+
+        
+
+        // Agent Percentage
+
+        // Agent Amount
+
+        // Payment Type
+
+        // Currency
+
+        // Date
+
+        // Time
+
+        // ID
+
+        // Location
+
+        // Status
+
+
 
         /* Firebase Code */
 
@@ -125,7 +152,7 @@ public class List_Item extends AppCompatActivity{
             public void onClick(View view) {
                 // TODO: Send messages on click
 //                BigInteger bigInteger = new BigInteger("1524240866140");
-                Payment payment = new Payment("Payment 2 Kansas", 40000, 10, 4000,
+                Payment payment = new Payment("Payment 2 Kansas", "40000", "10", 4000,
                         "Cash", "Rupee", "27th April 2018", "12:30", "1524240866180", "Kansas", "Collected");
 //                payment.setTitle("Payment 2 Kansas");
 //                payment.setCollection_amount(40000);

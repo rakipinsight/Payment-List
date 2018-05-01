@@ -3,9 +3,9 @@ package com.journaldev.customlistview;
 public class Payment {
 
     private String title;
-    private int collection_amount;
-    private int agent_percentage;
-    private int agent_amount;
+    private String collectionAmount;
+    private String agentPercentage;
+    private int agentAmount;
     private String paymentType;
     private String currency;
     private String date;
@@ -16,11 +16,11 @@ public class Payment {
 
     public Payment() { }
 
-    public Payment(String title, int collection_amount, int agent_percentage, int agent_amount, String paymentType, String currency, String date, String time, String id, String location, String status) {
+    public Payment(String title, String collectionAmount, String agentPercentage, int agentAmount, String paymentType, String currency, String date, String time, String id, String location, String status) {
         this.title = title;
-        this.collection_amount = collection_amount;
-        this.agent_percentage = agent_percentage;
-        this.agent_amount = agent_amount;
+        this.collectionAmount = collectionAmount;
+        this.agentPercentage = agentPercentage;
+        this.agentAmount = agentAmount;
         this.paymentType = paymentType;
         this.currency = currency;
         this.date = date;
@@ -38,28 +38,28 @@ public class Payment {
         this.title = title;
     }
 
-    public int getCollection_amount() {
-        return collection_amount;
+    public String getCollectionAmount() {
+        return collectionAmount;
     }
 
-    public void setCollection_amount(int collection_amount) {
-        this.collection_amount = collection_amount;
+    public void setCollectionAmount(String collectionAmount) {
+        this.collectionAmount = collectionAmount;
     }
 
-    public int getAgent_percentage() {
-        return agent_percentage;
+    public String getAgentPercentage() {
+        return agentPercentage;
     }
 
-    public void setAgent_percentage(int agent_percentage) {
-        this.agent_percentage = agent_percentage;
+    public void setAgentPercentage(String agentPercentage) {
+        this.agentPercentage = agentPercentage;
     }
 
-    public int getAgent_amount() {
-        return agent_amount;
+    public int getAgentAmount() {
+        return agentAmount;
     }
 
-    public void setAgent_amount(int agent_amount) {
-        this.agent_amount = agent_amount;
+    public void setAgentAmount(int agentAmount) {
+        this.agentAmount = agentAmount;
     }
 
     public String getPaymentType() {
