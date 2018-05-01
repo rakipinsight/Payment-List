@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".List_Item">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/title_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="292dp"
+            tools:layout_editor_absoluteY="140dp">
+
+            <TextView
+                android:id="@+id/title_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Title "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/title_TextView"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:hint="100.0"
+                android:textSize="18sp"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/title_textboxend"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="  "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/collection_amt_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/title_lyt">
+
+            <TextView
+                android:id="@+id/collection_amt_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Collection Amount "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/collection_amt_editText"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:hint="100.0"
+                android:textSize="18sp"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/collection_amt_textboxend"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="  "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/agent_percent_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/collection_amt_lyt">
+
+            <TextView
+                android:id="@+id/agent_percent_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Agent Percentage "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/agent_percent_editText"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:hint="1.0"
+                android:textSize="18sp"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/agent_percent_textboxend"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="  "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/agent_amt_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/agent_percent_lyt">
+
+            <TextView
+                android:id="@+id/agent_amt_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Agent Amount "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/agent_amt_TextView"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:hint="0.0"
+                android:textSize="18sp"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/agent_amt_textboxend"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="  "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/payment_type_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/agent_amt_lyt">
+
+            <TextView
+                android:id="@+id/payment_type_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Payment Type "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <Spinner
+                android:id="@+id/payment_dynamic_spinner"
+                android:hint=" Choose Payment Type "
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/currency_type_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/payment_type_lyt">
+
+            <TextView
+                android:id="@+id/currency_type_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Currency "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <Spinner
+                android:id="@+id/currency_dynamic_spinner"
+                android:hint=" Choose Currency "
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/date_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/currency_type_lyt">
+
+            <TextView
+                android:id="@+id/date_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Date "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/calendar_date"
+                android:clickable="true"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:editable="false"
+                android:hint="Date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/date_lyt">
+
+            <TextView
+                android:id="@+id/time_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Time "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/time"
+                android:clickable="true"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:editable="false"
+                android:hint=" Set Time "/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/location_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/time_lyt">
+
+            <TextView
+                android:id="@+id/location_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Location "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/location_edit_text"
+                android:clickable="true"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:editable="false"
+                android:hint=" Bangalore "/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/location_lyt">
+
+            <TextView
+                android:id="@+id/id_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Payment ID "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/payment_id_edit_text"
+                android:clickable="true"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:ems="10"
+                android:editable="false"
+                android:hint=" ID "/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/status_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/id_lyt">
+
+            <TextView
+                android:id="@+id/status_textbox"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text=" Status "
+                android:adjustViewBounds="true"
+                android:textColor="@android:color/black" />
+
+            <Spinner
+                android:id="@+id/status_dynamic_spinner"
+                android:hint=" Status "
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/update_btn_lyt"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/status_lyt">
+
+            <Button
+                android:id="@+id/update_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Update" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
