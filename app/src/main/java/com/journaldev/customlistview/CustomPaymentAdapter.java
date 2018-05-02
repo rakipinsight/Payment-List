@@ -36,7 +36,6 @@ public class CustomPaymentAdapter extends ArrayAdapter<Payment> implements View.
         super(context, R.layout.row_item, data);
         this.dataSet = data;
         this.mContext=context;
-
     }
 
 
@@ -68,6 +67,10 @@ public class CustomPaymentAdapter extends ArrayAdapter<Payment> implements View.
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        notifyDataSetChanged();
+//        notifyDataSetInvalidated();
+
         // Get the data item for this position
         Payment dataModel = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -76,7 +79,6 @@ public class CustomPaymentAdapter extends ArrayAdapter<Payment> implements View.
         final View result;
 
         if (convertView == null) {
-
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -98,12 +100,12 @@ public class CustomPaymentAdapter extends ArrayAdapter<Payment> implements View.
         result.startAnimation(animation);
         lastPosition = position;
 
-
         viewHolder.txtName.setText(dataModel.getTitle());
         viewHolder.txtType.setText(dataModel.getPaymentType());
         viewHolder.txtVersion.setText(dataModel.getStatus());
         viewHolder.info.setOnClickListener(this);
         viewHolder.info.setTag(position);
+
         // Return the completed view to render on screen
         return convertView;
     }

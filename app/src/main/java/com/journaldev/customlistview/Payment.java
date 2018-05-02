@@ -1,5 +1,7 @@
 package com.journaldev.customlistview;
 
+import java.util.Map;
+
 public class Payment {
 
     private String title;
@@ -10,13 +12,14 @@ public class Payment {
     private String currency;
     private String date;
     private String time;
-    private String id;
+    private Long id;
     private String location;
     private String status;
+    private Map<String, String> __meta__;
 
     public Payment() { }
 
-    public Payment(String title, String collectionAmount, String agentPercentage, int agentAmount, String paymentType, String currency, String date, String time, String id, String location, String status) {
+    public Payment(String title, String collectionAmount, String agentPercentage, int agentAmount, String paymentType, String currency, String date, String time, Long id, String location, String status, Map<String, String> __meta__) {
         this.title = title;
         this.collectionAmount = collectionAmount;
         this.agentPercentage = agentPercentage;
@@ -28,6 +31,7 @@ public class Payment {
         this.id = id;
         this.location = location;
         this.status = status;
+        this.__meta__ = __meta__;
     }
 
     public String getTitle() {
@@ -94,11 +98,11 @@ public class Payment {
         this.time = time;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -116,5 +120,13 @@ public class Payment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Map<String, String> get__meta__() {
+        return __meta__;
+    }
+
+    public void set__meta__(Map<String, String> __meta__) {
+        this.__meta__ = __meta__;
     }
 }

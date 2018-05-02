@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class List_Item extends AppCompatActivity{
@@ -36,18 +37,19 @@ public class List_Item extends AppCompatActivity{
 
     private ImageButton increment_col_amt;
     private ImageButton decrement_col_amt;
-    private EditText col_amt;
+    private TextView col_amt;
 
     private ImageButton increment_agent_percent;
     private ImageButton decrement_agent_percent;
-    private EditText agent_percent;
+    private TextView agent_percent;
 
     private ImageButton increment_agent_amt;
     private ImageButton decrement_agent_amt;
     private TextView agent_amt;
-    private EditText calendar_Edit_Text;
-    Calendar myCalendar = Calendar.getInstance();
-    EditText time;
+
+    private EditText date_Calendar_EditText;
+    private Calendar myCalendar = Calendar.getInstance();
+    private EditText time_EditText;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mPaymentsDatabaseReference;
@@ -56,9 +58,31 @@ public class List_Item extends AppCompatActivity{
     private Button updateButton;
 
     private ListView mMessageListView;
-//    private MessageAdapter mMessageAdapter;
 
     private TextView title_TextView;
+
+    private Spinner dynamicPaymentSpinner;
+
+    private String[] items;
+
+    private ArrayAdapter<String> paymentAdapter;
+
+    private EditText payment_id_editText;
+    private EditText location_editText;
+
+    private Spinner currencyDynamicSpinner;
+
+    private String[] currency_items;
+
+    private ArrayAdapter<String> currency_adapter;
+
+    private Spinner statusDynamicSpinner;
+
+    private String[] status_items;
+
+    private ArrayAdapter<String> status_adapter;
+
+    private Intent intent;
 
     public Double calculateAgentAmount(Double principal, Double percent){
 
@@ -93,7 +117,7 @@ public class List_Item extends AppCompatActivity{
     private void updateLabel() {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        calendar_Edit_Text.setText(sdf.format(myCalendar.getTime()));
+        date_Calendar_EditText.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
@@ -106,38 +130,37 @@ public class List_Item extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item);
 
-        Intent intent = getIntent();
+        intent = getIntent();
 
         // Payment Title
 
-        Log.i("$$$$$$$$$$$&&& Title : ",intent.getStringExtra("paymentTitle"));
-
         title_TextView = (TextView) findViewById(R.id.title_TextView);
-        title_TextView.setText(intent.getStringExtra("paymentTitle"), TextView.BufferType.EDITABLE);
+        title_TextView.setText(intent.getStringExtra("title"), TextView.BufferType.EDITABLE);
 
         // Collection Amount
 
-        
+        col_amt = (TextView) findViewById(R.id.collection_amt_editText);
+        col_amt.setText(intent.getStringExtra("collectionAmount"), TextView.BufferType.EDITABLE);
 
         // Agent Percentage
 
+        agent_percent = (TextView) findViewById(R.id.agent_percent_editText);
+        agent_percent.setText(intent.getStringExtra("agentPercentage"), TextView.BufferType.EDITABLE);
+
         // Agent Amount
 
-        // Payment Type
-
-        // Currency
-
-        // Date
-
-        // Time
+        agent_amt = (TextView) findViewById(R.id.agent_amt_TextView);
+        agent_amt.setText(String.valueOf(intent.getIntExtra("agentAmount", 0)));
 
         // ID
 
+        payment_id_editText = (EditText) findViewById(R.id.payment_id_edit_text);
+        payment_id_editText.setText(Long.toString((intent.getLongExtra("id", 0l))));
+
         // Location
 
-        // Status
-
-
+        location_editText = (EditText) findViewById(R.id.location_edit_text);
+        location_editText.setText(intent.getStringExtra("location"), TextView.BufferType.EDITABLE);
 
         /* Firebase Code */
 
@@ -151,30 +174,46 @@ public class List_Item extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 // TODO: Send messages on click
-//                BigInteger bigInteger = new BigInteger("1524240866140");
-                Payment payment = new Payment("Payment 2 Kansas", "40000", "10", 4000,
-                        "Cash", "Rupee", "27th April 2018", "12:30", "1524240866180", "Kansas", "Collected");
-//                payment.setTitle("Payment 2 Kansas");
-//                payment.setCollection_amount(40000);
-//                payment.setAgent_percentage(10);
-//                payment.setAgent_amount(4000);
-//                payment.setPaymentType("Cash");
-//                payment.setCurrency("Rupee");
-//                payment.setDate("26th April 2018");
-//                payment.setTime("12:30");
-//
-//                payment.setId(bigInteger);
-//                payment.setLocation("Kansas");
-//                payment.setStatus("Collected");
 
-                mPaymentsDatabaseReference.push().setValue(payment);
+//                Payment payment = new Payment();
+//
+//                payment.setTitle(title_TextView.getText().toString());
+//                payment.setCollectionAmount(col_amt.getText().toString());
+//                payment.setAgentPercentage(agent_percent.getText().toString());
+//                payment.setAgentAmount(Integer.parseInt(agent_amt.getText().toString()));
+//                payment.setPaymentType(dynamicPaymentSpinner.getSelectedItem().toString());
+//                payment.setCurrency(currencyDynamicSpinner.getSelectedItem().toString());
+//                payment.setDate(date_Calendar_EditText.getText().toString());
+//                payment.setTime(time_EditText.getText().toString());
+//
+//                payment.setId(Long.parseLong(payment_id_editText.getText().toString()));
+//                payment.setLocation(location_editText.getText().toString());
+//                payment.setStatus(statusDynamicSpinner.getSelectedItem().toString());
+//
+//                mPaymentsDatabaseReference.push().setValue(payment);
 
-//                HashMap<String, Object> result = new HashMap<>();
-//                result.put("title", "Payment 2 Kansas");
-//                result.put("collectionAmount", 40000);
-//
-//
-//                mPaymentsDatabaseReference.child("1524240866140").updateChildren(result);
+                HashMap<String, Object> result = new HashMap<>();
+
+                result.put("title", title_TextView.getText().toString());
+                result.put("collectionAmount", col_amt.getText().toString());
+                result.put("agentPercentage", agent_percent.getText().toString());
+                result.put("agentAmount", Integer.parseInt(agent_amt.getText().toString()));
+                result.put("paymentType", dynamicPaymentSpinner.getSelectedItem().toString());
+                result.put("currency", currencyDynamicSpinner.getSelectedItem().toString());
+                result.put("date", date_Calendar_EditText.getText().toString());
+                result.put("time", time_EditText.getText().toString());
+                result.put("id", Long.parseLong(payment_id_editText.getText().toString()));
+                result.put("location", location_editText.getText().toString());
+                result.put("status", statusDynamicSpinner.getSelectedItem().toString());
+
+                HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("__meta__");
+                result.put("__meta__", hashMap);
+
+                mPaymentsDatabaseReference.child(payment_id_editText.getText().toString()).updateChildren(result);
+
+                Intent intent = new Intent(List_Item.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -182,7 +221,7 @@ public class List_Item extends AppCompatActivity{
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Payment payment = dataSnapshot.getValue(Payment.class);
-//                mMessageAdapter.add(payment);
+
             }
 
             @Override
@@ -208,38 +247,19 @@ public class List_Item extends AppCompatActivity{
 
         mPaymentsDatabaseReference.addChildEventListener(mChildEventListener);
 
-//        updateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // TODO: Update payments on click
-//                Payment payment = new Payment();
-//                payment.setTitle("Collect From Kansas");
-//                payment.setCollection_amount(40000);
-//                payment.setAgent_percentage(10);
-//                payment.setAgent_amount(4000);
-//                payment.setPaymentType("Cash");
-//                payment.setCurrency("Rupee");
-//                payment.setDate("April 26, 2018");
-//                payment.setTime("11:50");
-////                payment.setId(1524240866140);
-//
-//
-//        })
+        // Payment Type Drop-Down Menu
 
+        dynamicPaymentSpinner = (Spinner) findViewById(R.id.payment_dynamic_spinner);
 
-        Spinner dynamicSpinner = (Spinner) findViewById(R.id.payment_dynamic_spinner);
+        items = new String[] { "Cash", "Credit Card", "Online Banking" };
 
-        String[] items = new String[] { "Cash", "Credit Card", "Online Banking" };
+        paymentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, items);
+        dynamicPaymentSpinner.setAdapter(paymentAdapter);
 
-        dynamicSpinner.setAdapter(adapter);
-
-        dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dynamicPaymentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.v("item", (String) parent.getItemAtPosition(position));
             }
 
@@ -249,11 +269,16 @@ public class List_Item extends AppCompatActivity{
             }
         });
 
-        Spinner currencyDynamicSpinner = (Spinner) findViewById(R.id.currency_dynamic_spinner);
+        int paymentTypeSelectionPosition = paymentAdapter.getPosition(intent.getStringExtra("paymentType"));
+        dynamicPaymentSpinner.setSelection(paymentTypeSelectionPosition);
 
-        String[] currency_items = new String[] { "Rupee" };
+        // Currency Spinner
 
-        ArrayAdapter<String> currency_adapter = new ArrayAdapter<String>(this,
+        currencyDynamicSpinner = (Spinner) findViewById(R.id.currency_dynamic_spinner);
+
+        currency_items = new String[] { "Rupee(s)", "US Dollar(s)" };
+
+        currency_adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, currency_items);
 
         currencyDynamicSpinner.setAdapter(currency_adapter);
@@ -271,13 +296,16 @@ public class List_Item extends AppCompatActivity{
             }
         });
 
+        int currencySelectionPosition = currency_adapter.getPosition(intent.getStringExtra("currency"));
+        currencyDynamicSpinner.setSelection(currencySelectionPosition);
+
         // Status Spinner Logic
 
-        Spinner statusDynamicSpinner = (Spinner) findViewById(R.id.status_dynamic_spinner);
+        statusDynamicSpinner = (Spinner) findViewById(R.id.status_dynamic_spinner);
 
-        String[] status_items = new String[] { "Open", "Assigned", "Collected" };
+        status_items = new String[] { "Open", "Assigned", "Collected" };
 
-        ArrayAdapter<String> status_adapter = new ArrayAdapter<String>(this,
+        status_adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, status_items);
 
         statusDynamicSpinner.setAdapter(status_adapter);
@@ -295,9 +323,12 @@ public class List_Item extends AppCompatActivity{
             }
         });
 
+        int statusSelectionPosition = status_adapter.getPosition(intent.getStringExtra("status"));
+        statusDynamicSpinner.setSelection(statusSelectionPosition);
+
         // Date Picker Logic
 
-        calendar_Edit_Text= (EditText) findViewById(R.id.calendar_date);
+        date_Calendar_EditText = (EditText) findViewById(R.id.calendar_date);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -312,7 +343,7 @@ public class List_Item extends AppCompatActivity{
 
         };
 
-        calendar_Edit_Text.setOnClickListener(new View.OnClickListener() {
+        date_Calendar_EditText.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -323,12 +354,14 @@ public class List_Item extends AppCompatActivity{
             }
         });
 
+        date_Calendar_EditText.setText(intent.getStringExtra("date"), TextView.BufferType.EDITABLE);
+
         // Time Picker Logic
 
         //  initiate the edit text
-        time = (EditText) findViewById(R.id.time);
+        time_EditText = (EditText) findViewById(R.id.time);
         // perform click event listener on edit text
-        time.setOnClickListener(new View.OnClickListener() {
+        time_EditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -338,14 +371,15 @@ public class List_Item extends AppCompatActivity{
                 mTimePicker = new TimePickerDialog(List_Item.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time.setText(selectedHour + ":" + selectedMinute);
+                        time_EditText.setText(selectedHour + ":" + selectedMinute);
                     }
-                }, hour, minute, false);//Yes 24 hour time
+                }, hour, minute, false);//Yes 24 hour time_EditText
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
             }
         });
+        time_EditText.setText(intent.getStringExtra("time"), TextView.BufferType.EDITABLE);
 
     }
 
