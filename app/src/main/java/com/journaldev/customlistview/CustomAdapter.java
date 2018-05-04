@@ -2,7 +2,6 @@ package com.journaldev.customlistview;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 
@@ -43,27 +43,20 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
     @Override
     public void onClick(View v) {
 
-
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        DataModel dataModel=(DataModel)object;
+        Payment dataModel=(Payment)object;
 
+        switch (v.getId()) {
 
+            case R.id.list_item_company_logo:
 
-
-        switch (v.getId())
-        {
-
-            case R.id.item_info:
-
-                Snackbar.make(v, "Release date " +dataModel.getFeature(), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "Release date " +dataModel.getStatus(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
 
                 break;
 
-
         }
-
 
     }
 
@@ -84,10 +77,10 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item, parent, false);
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.txtType = (TextView) convertView.findViewById(R.id.type);
-            viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
-            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
+//            viewHolder.txtName = (TextView) convertView.findViewById(R.id.title_TextView);
+//            viewHolder.txtType = (TextView) convertView.findViewById(R.id.type);
+//            viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
+//            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
 
             result=convertView;
 
@@ -102,11 +95,11 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
         lastPosition = position;
 
 
-        viewHolder.txtName.setText(dataModel.getName());
-        viewHolder.txtType.setText(dataModel.getType());
-        viewHolder.txtVersion.setText(dataModel.getVersion_number());
-        viewHolder.info.setOnClickListener(this);
-        viewHolder.info.setTag(position);
+//        viewHolder.txtName.setText(dataModel.getName());
+//        viewHolder.txtType.setText(dataModel.getType());
+//        viewHolder.txtVersion.setText(dataModel.getVersion_number());
+//        viewHolder.info.setOnClickListener(this);
+//        viewHolder.info.setTag(position);
         // Return the completed view to render on screen
         return convertView;
     }
