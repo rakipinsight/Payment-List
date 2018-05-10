@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,11 +21,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -84,6 +89,12 @@ public class List_Item extends AppCompatActivity{
 
     private Intent intent;
 
+    private HashMap<String, Object> result = new HashMap<>();
+    private static final int RC_PHOTO_PICKER = 2;
+
+    private FirebaseStorage mFirebaseStorage;
+    private StorageReference mChatPhotosStorageReference;
+
     public Double calculateAgentAmount(Double principal, Double percent){
 
         BigDecimal base = new BigDecimal(principal);
@@ -120,15 +131,42 @@ public class List_Item extends AppCompatActivity{
         date_Calendar_EditText.setText(sdf.format(myCalendar.getTime()));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
+//            Uri selectedImageUri = data.getData();
+//
+//            // Get a reference to store file at chat_photos/<FILENAME>
+//            StorageReference photoRef = mChatPhotosStorageReference.child(selectedImageUri.getLastPathSegment());
+//
+//            // Upload file to Firebase Storage
+//            photoRef.putFile(selectedImageUri)
+//                    .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            // When the image has successfully uploaded, we get its download URL
+//                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+//
+//                            // Set the download URL to the message box, so that the user can send it to the database
+////                            FriendlyMessage friendlyMessage = new FriendlyMessage(null, mUsername, downloadUrl.toString());
+//                            Payment payment = new Payment();
+//                            payment.setPhotoUrl(downloadUrl.toString());
+//
+//                            result.put("photoUrl", downloadUrl.toString());
+//                            createPaymentMap();
+//                            mPaymentsDatabaseReference.push().setValue(result);
+//                            mPaymentsDatabaseReference.child(payment_id_editText.getText().toString()).updateChildren(result);
+//                        }
+//                    });
+//        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item);
+
+        mFirebaseStorage = FirebaseStorage.getInstance();
+        mChatPhotosStorageReference = mFirebaseStorage.getReference().child("payment_documents_photos");
 
         intent = getIntent();
 
@@ -175,41 +213,24 @@ public class List_Item extends AppCompatActivity{
             public void onClick(View view) {
                 // TODO: Send messages on click
 
-//                Payment payment = new Payment();
+//                result = new HashMap<>();
 //
-//                payment.setTitle(title_TextView.getText().toString());
-//                payment.setCollectionAmount(col_amt.getText().toString());
-//                payment.setAgentPercentage(agent_percent.getText().toString());
-//                payment.setAgentAmount(Integer.parseInt(agent_amt.getText().toString()));
-//                payment.setPaymentType(dynamicPaymentSpinner.getSelectedItem().toString());
-//                payment.setCurrency(currencyDynamicSpinner.getSelectedItem().toString());
-//                payment.setDate(date_Calendar_EditText.getText().toString());
-//                payment.setTime(time_EditText.getText().toString());
+//                result.put("title", title_TextView.getText().toString());
+//                result.put("collectionAmount", col_amt.getText().toString());
+//                result.put("agentPercentage", agent_percent.getText().toString());
+//                result.put("agentAmount", Integer.parseInt(agent_amt.getText().toString()));
+//                result.put("paymentType", dynamicPaymentSpinner.getSelectedItem().toString());
+//                result.put("currency", currencyDynamicSpinner.getSelectedItem().toString());
+//                result.put("date", date_Calendar_EditText.getText().toString());
+//                result.put("time", time_EditText.getText().toString());
+//                result.put("id", Long.parseLong(payment_id_editText.getText().toString()));
+//                result.put("location", location_editText.getText().toString());
+//                result.put("status", statusDynamicSpinner.getSelectedItem().toString());
 //
-//                payment.setId(Long.parseLong(payment_id_editText.getText().toString()));
-//                payment.setLocation(location_editText.getText().toString());
-//                payment.setStatus(statusDynamicSpinner.getSelectedItem().toString());
-//
-//                mPaymentsDatabaseReference.push().setValue(payment);
+//                HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("__meta__");
+//                result.put("__meta__", hashMap);
 
-                HashMap<String, Object> result = new HashMap<>();
-
-                result.put("title", title_TextView.getText().toString());
-                result.put("collectionAmount", col_amt.getText().toString());
-                result.put("agentPercentage", agent_percent.getText().toString());
-                result.put("agentAmount", Integer.parseInt(agent_amt.getText().toString()));
-                result.put("paymentType", dynamicPaymentSpinner.getSelectedItem().toString());
-                result.put("currency", currencyDynamicSpinner.getSelectedItem().toString());
-                result.put("date", date_Calendar_EditText.getText().toString());
-                result.put("time", time_EditText.getText().toString());
-                result.put("id", Long.parseLong(payment_id_editText.getText().toString()));
-                result.put("location", location_editText.getText().toString());
-                result.put("status", statusDynamicSpinner.getSelectedItem().toString());
-
-                HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("__meta__");
-                result.put("__meta__", hashMap);
-
-                mPaymentsDatabaseReference.child(payment_id_editText.getText().toString()).updateChildren(result);
+                mPaymentsDatabaseReference.child(payment_id_editText.getText().toString()).updateChildren(createPaymentMap());
 
                 Intent intent = new Intent(List_Item.this, MainActivity.class);
                 startActivity(intent);
@@ -380,6 +401,52 @@ public class List_Item extends AppCompatActivity{
             }
         });
         time_EditText.setText(intent.getStringExtra("time"), TextView.BufferType.EDITABLE);
+
+    }
+
+    private HashMap<String, Object> createPaymentMap(){
+        result = new HashMap<>();
+
+        result.put("title", title_TextView.getText().toString());
+        result.put("collectionAmount", col_amt.getText().toString());
+        result.put("agentPercentage", agent_percent.getText().toString());
+        result.put("agentAmount", Integer.parseInt(agent_amt.getText().toString()));
+        result.put("paymentType", dynamicPaymentSpinner.getSelectedItem().toString());
+        result.put("currency", currencyDynamicSpinner.getSelectedItem().toString());
+        result.put("date", date_Calendar_EditText.getText().toString());
+        result.put("time", time_EditText.getText().toString());
+        result.put("id", Long.parseLong(payment_id_editText.getText().toString()));
+        result.put("location", location_editText.getText().toString());
+        result.put("status", statusDynamicSpinner.getSelectedItem().toString());
+
+        HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("__meta__");
+        result.put("__meta__", hashMap);
+        return result;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_list_item, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.sign_out_menu:
+                AuthUI.getInstance().signOut(this);
+                return true;
+            case R.id.upload_menu:
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 

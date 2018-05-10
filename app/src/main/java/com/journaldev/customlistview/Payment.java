@@ -16,6 +16,7 @@ public class Payment {
     private String location;
     private String status;
     private Map<String, String> __meta__;
+//    private String photoUrl;
 
     public Payment() { }
 
@@ -32,6 +33,7 @@ public class Payment {
         this.location = location;
         this.status = status;
         this.__meta__ = __meta__;
+//        this.photoUrl = photoUrl;
     }
 
     public String getTitle() {
@@ -129,4 +131,12 @@ public class Payment {
     public void set__meta__(Map<String, String> __meta__) {
         this.__meta__ = __meta__;
     }
+
+//    public String getPhotoUrl() {
+//        return photoUrl;
+//    }
+//
+//    public void setPhotoUrl(String photoUrl) {
+//        this.photoUrl = photoUrl;
+//    }
 }
